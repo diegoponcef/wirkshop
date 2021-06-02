@@ -3,38 +3,38 @@ name: Deploy to Dev
 on: push
 
 jobs:
-  hello-world-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: my-first-step
-        run: echo "Hello World from Pipeline!"
-
-  # quality-check-and-tests:
+  # hello-world-job:
   #   runs-on: ubuntu-latest
-
   #   steps:
-  #     - uses: actions/checkout@v2
+  #     - name: my-first-step
+  #       run: echo "Hello World from Pipeline!"
 
-  #     - name: Cache node modules
-  #       uses: actions/cache@v2
-  #       env:
-  #         cache-name: cache-node-modules
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-build-${{ env.cache-name }}-
-  #           ${{ runner.os }}-build-
-  #           ${{ runner.os }}-
+  quality-check-and-tests:
+    runs-on: ubuntu-latest
 
-  #     - name: Install Dependencies
-  #       run: npm install
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Lint
-  #       run: npm run lint
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-  #     - name: Test
-  #       run: npm run test
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
 
   # deploy-to-dev:
   #   needs: quality-check-and-tests
